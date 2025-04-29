@@ -1,6 +1,6 @@
 -- Dead Hub - Created By Pedrin031
 
-local Neox = loadstring(game:HttpGet("https://raw.githubusercontent.com/hassanxzayn-lua/NEOXHUBMAIN/refs/heads/main/newneoxlib"))()
+local Neox = loadstring(game:HttpGet("https://raw.githubusercontent.com/hassanxzayn-lua/NEOXHUBMAIN/refs/heads/main/newneoxlib.lua"))()
 
 local Window = Neox:CreateWindow({
     Title = "Dead Hub | Dead Rails v1.9.4",
@@ -39,7 +39,9 @@ Window:SelectTab(1)
 
 local executorName = "Unknown Executor"
 pcall(function()
-    executorName = identifyexecutor() or "Unknown Executor"
+    if identifyexecutor then
+        executorName = identifyexecutor() or "Unknown Executor"
+    end
 end)
 
 Tabs.Home:AddSection("Executor: " .. executorName)
@@ -60,13 +62,7 @@ Tabs.Home:AddButton({
 
 Tabs.Home:AddParagraph({
     Title = "Atualização v1.9.4",
-    Content = "[+] = Adicionado     [-] = Corrigido
------------------------------
-[+] Paredes das casas transparentes
-"
+    Content = "[+] = Adicionado     [-] = Corrigido\n-----------------------------\n[+] Paredes das casas transparentes"
 })
 
 print("Dead Hub carregado com sucesso!")
-
-with open("/mnt/data/DeadHub_Final.txt", "w", encoding="utf-8") as f:
-    f.write(script_text)
