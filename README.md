@@ -70,5 +70,3 @@ print("Dead Hub carregado com sucesso!")
 
 with open("/mnt/data/DeadHub_Final.txt", "w", encoding="utf-8") as f:
     f.write(script_text)
-
-"/mnt/data/DeadHub_Final.txt"
