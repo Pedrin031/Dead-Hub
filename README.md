@@ -1,4 +1,5 @@
 -- Dead Hub - Created By Pedrin031
+
 local Neox = loadstring(game:HttpGet("https://raw.githubusercontent.com/hassanxzayn-lua/NEOXHUBMAIN/refs/heads/main/newneoxlib"))()
 
 local Window = Neox:CreateWindow({
@@ -7,9 +8,20 @@ local Window = Neox:CreateWindow({
     TabWidth = 120,
     Size = UDim2.fromOffset(600, 450),
     Acrylic = false,
-    Theme = "Light", -- Light + modificação de cor depois
+    Theme = "Light",
     MinimizeKey = Enum.KeyCode.P
 })
+
+task.spawn(function()
+    local CoreGui = game:GetService("CoreGui")
+    for _, v in ipairs(CoreGui:GetDescendants()) do
+        if v:IsA("Frame") or v:IsA("TextLabel") or v:IsA("TextButton") then
+            if v.BackgroundColor3 == Color3.fromRGB(20, 20, 20) or v.BackgroundColor3 == Color3.fromRGB(30, 30, 30) then
+                v.BackgroundColor3 = Color3.fromRGB(192, 192, 192)
+            end
+        end
+    end
+end)
 
 local Tabs = {
     Home = Window:AddTab({ Title = " Home", Icon = "rbxassetid://7733960981" }),
@@ -48,20 +60,15 @@ Tabs.Home:AddButton({
 
 Tabs.Home:AddParagraph({
     Title = "Atualização v1.9.4",
-    Content = "[+] = Adicionado     [-] = Corrigido\n-----------------------------\n[+] Paredes das casas transparentes\n"
+    Content = "[+] = Adicionado     [-] = Corrigido
+-----------------------------
+[+] Paredes das casas transparentes
+"
 })
 
-task.defer(function()
-    local gui = Window._ScreenGui or Window.Gui or nil
-    if gui then
-        for _, v in ipairs(gui:GetDescendants()) do
-            if v:IsA("Frame") or v:IsA("TextLabel") or v:IsA("TextButton") then
-                if v.BackgroundColor3 == Color3.fromRGB(20,20,20) or v.BackgroundColor3 == Color3.fromRGB(30,30,30) then
-                    v.BackgroundColor3 = Color3.fromRGB(192,192,192) -- cinza clássico #C0C0C0
-                end
-            end
-        end
-    end
-end)
-
 print("Dead Hub carregado com sucesso!")
+
+with open("/mnt/data/DeadHub_Final.txt", "w", encoding="utf-8") as f:
+    f.write(script_text)
+
+"/mnt/data/DeadHub_Final.txt"
