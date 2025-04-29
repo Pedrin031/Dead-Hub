@@ -7,20 +7,9 @@ local Window = Neox:CreateWindow({
     TabWidth = 120,
     Size = UDim2.fromOffset(600, 450),
     Acrylic = false,
-    Theme = "Light",
+    Theme = "Light", -- Light + modificação de cor depois
     MinimizeKey = Enum.KeyCode.P
 })
-
-local CoreGui = game:GetService("CoreGui")
-spawn(function()
-    for _, v in ipairs(CoreGui:GetDescendants()) do
-        if v:IsA("Frame") or v:IsA("TextLabel") or v:IsA("TextButton") then
-            if v.BackgroundColor3 == Color3.fromRGB(20,20,20) or v.BackgroundColor3 == Color3.fromRGB(30,30,30) then
-                v.BackgroundColor3 = Color3.fromRGB(192,192,192) -- #C0C0C0
-            end
-        end
-    end
-end)
 
 local Tabs = {
     Home = Window:AddTab({ Title = " Home", Icon = "rbxassetid://7733960981" }),
@@ -36,8 +25,13 @@ local Tabs = {
 }
 Window:SelectTab(1)
 
-local Section = Tabs.Home:AddSection("Executor: " .. (identifyexecutor() or "Unknown Executor"))
-local Section = Tabs.Home:AddSection("")
+local executorName = "Unknown Executor"
+pcall(function()
+    executorName = identifyexecutor() or "Unknown Executor"
+end)
+
+Tabs.Home:AddSection("Executor: " .. executorName)
+Tabs.Home:AddSection("")
 
 Tabs.Home:AddButton({
     Title = "Discord",
@@ -56,5 +50,18 @@ Tabs.Home:AddParagraph({
     Title = "Atualização v1.9.4",
     Content = "[+] = Adicionado     [-] = Corrigido\n-----------------------------\n[+] Paredes das casas transparentes\n"
 })
+
+task.defer(function()
+    local gui = Window._ScreenGui or Window.Gui or nil
+    if gui then
+        for _, v in ipairs(gui:GetDescendants()) do
+            if v:IsA("Frame") or v:IsA("TextLabel") or v:IsA("TextButton") then
+                if v.BackgroundColor3 == Color3.fromRGB(20,20,20) or v.BackgroundColor3 == Color3.fromRGB(30,30,30) then
+                    v.BackgroundColor3 = Color3.fromRGB(192,192,192) -- cinza clássico #C0C0C0
+                end
+            end
+        end
+    end
+end)
 
 print("Dead Hub carregado com sucesso!")
