@@ -1,8 +1,15 @@
 -- Dead Hub - Created By Pedrin031
 
-local Neox = loadstring(game:HttpGet("https://raw.githubusercontent.com/hassanxzayn-lua/NEOXHUBMAIN/refs/heads/main/newneoxlib.lua"))()
+local success, NeoxLib = pcall(function()
+    return loadstring(game:HttpGet("https://raw.githubusercontent.com/hassanxzayn-lua/NEOXHUBMAIN/refs/heads/main/newneoxlib.lua"))()
+end)
 
-local Window = Neox:CreateWindow({
+if not success or not NeoxLib then
+    warn("Não foi possível carregar o NeoxLib. Verifique o link ou sua conexão.")
+    return
+end
+
+local Window = NeoxLib:CreateWindow({
     Title = "Dead Hub | Dead Rails v1.9.4",
     SubTitle = "Created By Pedrin031",
     TabWidth = 120,
@@ -40,29 +47,8 @@ Window:SelectTab(1)
 local executorName = "Unknown Executor"
 pcall(function()
     if identifyexecutor then
-        executorName = identifyexecutor() or "Unknown Executor"
-    end
-end)
-
-Tabs.Home:AddSection("Executor: " .. executorName)
-Tabs.Home:AddSection("")
-
-Tabs.Home:AddButton({
-    Title = "Discord",
-    Description = "Clique para copiar o link do nosso Discord!",
-    Callback = function()
-        if setclipboard then
-            setclipboard("https://discord.gg/jfKVrrMx")
-            print("Link do Discord copiado!")
-        else
-            warn("setclipboard não disponível.")
+        local id = identifyexecutor()
+        if typeof(id) == "string" then
+            executorName = id
         end
     end
-})
-
-Tabs.Home:AddParagraph({
-    Title = "Atualização v1.9.4",
-    Content = "[+] = Adicionado     [-] = Corrigido\n-----------------------------\n[+] Paredes das casas transparentes"
-})
-
-print("Dead Hub carregado com sucesso!")
